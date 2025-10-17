@@ -1,5 +1,5 @@
 FROM alpine:3.22.0
-LABEL maintainer="JulianPrieber"
+LABEL maintainer="TheoWolfNZ"
 LABEL description="LinkStack Docker"
 
 EXPOSE 80 443
@@ -51,6 +51,9 @@ RUN find /htdocs -type d -print0 | xargs -0 chmod 0755
 RUN find /htdocs -type f -print0 | xargs -0 chmod 0644
 
 COPY --chmod=0755 docker-entrypoint.sh /usr/local/bin/
+RUN apk add --no-cache dos2unix \
+    && dos2unix /usr/local/bin/docker-entrypoint.sh
+
 
 USER apache:apache
 
